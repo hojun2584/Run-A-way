@@ -22,7 +22,6 @@ namespace Hojun
 
         public new void Awake()
         {
-
             //fsfsd
             base.Awake();
             stateMachine = new StateMachine<Zombie>(this);
@@ -32,7 +31,7 @@ namespace Hojun
         // Start is called before the first frame update
         void Start()
         {
-
+            Debug.Log("fdf");
         }
 
         // Update is called once per frame
