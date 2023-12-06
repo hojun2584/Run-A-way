@@ -10,6 +10,8 @@ namespace Hojun
     {
         public GameObject Owner { get;}
         public void Move(GameObject target);
+
+        //fdsfds
     }
 
     public interface IMoveAble
