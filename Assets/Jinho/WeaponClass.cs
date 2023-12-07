@@ -7,6 +7,7 @@ namespace Jinho
 {
     public class Weapon
     {
+        protected WeaponClass weaponData;
         public string name;         //총기 이름
         public Sprite image;        //총기 종류 이미지
         public PlayerAttackState attackState;   //공격 방식
@@ -38,18 +39,19 @@ namespace Jinho
 
         public Transform firePos;   //총알 발사 위치
         public GameObject bullet;   //날아갈 총알 GameObject
-        public Weapon(string name, Sprite image, float damage, int maxBullet, int bulletCount, int maxTotalBullet, int totalBullet, Transform firePos, PlayerAttackState attackState, GameObject bullet = null)
+        public Weapon(WeaponClass weaponData)
         {
-            this.name = name;
-            this.image = image;
-            this.attackState = attackState;
-            this.damage = damage;
-            this.maxBullet = maxBullet;
-            BulletCount = bulletCount;
-            this.maxTotalBullet = maxTotalBullet;
-            TotalBullet = totalBullet;
-            this.firePos = firePos;
-            this.bullet = bullet;
+            this.weaponData = weaponData;
+            this.name = weaponData.name;
+            this.image = weaponData.image;
+            this.attackState = weaponData.attackState;
+            this.damage = weaponData.damage;
+            this.maxBullet = weaponData.maxBullet;
+            BulletCount = weaponData.bulletCount;
+            this.maxTotalBullet = weaponData.maxTotalBullet;
+            TotalBullet = weaponData.totalBullet;
+            this.firePos = weaponData.firePos;
+            this.bullet = weaponData.bullet;
         }
 
         public virtual void Fire() { }
@@ -57,13 +59,17 @@ namespace Jinho
     }
     public class Rifle : Weapon
     {
-        public Rifle(string name, Sprite image, float damage, int maxBullet, int bulletCount, int maxTotalBullet, int totalBullet, Transform firePos, PlayerAttackState attackState, GameObject bullet) : base(name, image, damage, maxBullet, bulletCount, maxTotalBullet, totalBullet, firePos, attackState, bullet)
+        public Rifle(WeaponClass weaponData) : base(weaponData)
         {
         }
 
         public override void Fire()
         {
             Debug.Log("라이플 빵!");
+            GameObject bulletObj = weaponData.BulletSpawn();
+            bulletObj.GetComponent<bullet>().SetBulletData(this);
+            bulletObj.transform.position = firePos.position;
+            bulletObj.transform.rotation = firePos.rotation;
         }
         public override void Reload()
         {
@@ -72,7 +78,7 @@ namespace Jinho
     }
     public class Shotgun : Weapon
     {
-        public Shotgun(string name, Sprite image, float damage, int maxBullet, int bulletCount, int maxTotalBullet, int totalBullet, Transform firePos, PlayerAttackState attackState, GameObject bullet) : base(name, image, damage, maxBullet, bulletCount, maxTotalBullet, totalBullet, firePos, attackState, bullet)
+        public Shotgun(WeaponClass weaponData) : base(weaponData)
         {
         }
 
@@ -87,7 +93,7 @@ namespace Jinho
     }
     public class Handgun : Weapon
     {
-        public Handgun(string name, Sprite image, float damage, int maxBullet, int bulletCount, int maxTotalBullet, int totalBullet, Transform firePos, PlayerAttackState attackState, GameObject bullet) : base(name, image, damage, maxBullet, bulletCount, maxTotalBullet, totalBullet, firePos, attackState, bullet)
+        public Handgun(WeaponClass weaponData) : base(weaponData)
         {
         }
 
@@ -130,20 +136,25 @@ namespace Jinho
             switch (weaponType)
             {
                 case WeaponType.Rifle:
-                    weapon = new Rifle(weaponName, image, damage, maxBullet, bulletCount, maxTotalBullet, totalBullet, firePos, attackState, bullet);
+                    weapon = new Rifle(this);
                     break;
                 case WeaponType.Shotgun:
-                    weapon = new Shotgun(weaponName, image, damage, maxBullet, bulletCount, maxTotalBullet, totalBullet, firePos, attackState, bullet);
+                    weapon = new Shotgun(this);
                     break;
                 case WeaponType.Handgun:
-                    weapon = new Handgun(weaponName, image, damage, maxBullet, bulletCount, maxTotalBullet, totalBullet, firePos, attackState, bullet);
+                    weapon = new Handgun(this);
                     break;
             }
+        }
+        public GameObject BulletSpawn()
+        {
+            return Instantiate(bullet);
         }
         private void OnTriggerEnter(Collider other)
         {
             if(other.TryGetComponent(out PlayerController player))
             {
+                player.weaponObjSlot[0] = gameObject;
                 player.weaponSlot[0] = weapon;
                 player.currentWeapon = player.weaponSlot[0];
                 gameObject.SetActive(false);

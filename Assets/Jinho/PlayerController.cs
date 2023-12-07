@@ -128,24 +128,24 @@ namespace Jinho
             {
                 keycode = KeyCode.Alpha1;
             }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 keycode = KeyCode.Alpha2;
             }
-            if (Input.GetKeyDown(KeyCode.Alpha3))
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
             {
                 keycode = KeyCode.Alpha3;
             }
-            if (Input.GetKeyDown(KeyCode.Alpha4))
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
             {
                 keycode = KeyCode.Alpha4;
             }
-            if (player.currentWeapon == player.weaponSlot[player.SlotGetToKey(keycode)]) 
-                return;
-
-            //무기 교체 애니
-            player.currentWeapon = player.weaponSlot[player.SlotGetToKey(keycode)];
-            player.attackState = player.currentWeapon.attackState;
+            if (player.currentWeapon != player.weaponSlot[player.SlotGetToKey(keycode)])
+            {
+                //무기 교체 애니
+                player.currentWeapon = player.weaponSlot[player.SlotGetToKey(keycode)];
+                player.attackState = player.currentWeapon.attackState;
+            }
         }
     }
     public class GunAttackStrategy : AttackStrategy
@@ -246,8 +246,10 @@ namespace Jinho
     public class PlayerController : MonoBehaviour
     {
         public PlayerState state;                                   //player의 기본state
+        public GameObject[] weaponObjSlot = new GameObject[4];
         public Weapon[] weaponSlot = new Weapon[4];                 //weapon slot
         public Weapon currentWeapon = null;                         //현재 들고있는 weapon
+        public Transform rightHand;                                 //실제로 무기를 들고 있을 손
 
         public PlayerMoveState moveState;                           //현재 move전략
         public PlayerAttackState attackState;                       //현재 attack전력
@@ -288,7 +290,9 @@ namespace Jinho
         }
         public int SlotGetToKey(KeyCode keycode)
         {
-            return weaponSlotDic[keycode];
+            if(weaponSlotDic.ContainsKey(keycode))
+                return weaponSlotDic[keycode];
+            return -1;
         }
         void SetSlotDic()   //weaponSlotDic을 입력하는 함수
         {

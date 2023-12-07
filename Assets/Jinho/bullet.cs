@@ -15,13 +15,9 @@ public class bullet : MonoBehaviour
 
     void Update()
     {
-        BulletMoveing();
-    }
-    void BulletMoveing()
-    {
         transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
     }
-    public void SetBulletData(Weapon weapon, float damage)
+    public void SetBulletData(Weapon weapon)
     {
         parentWeapon = weapon;
         damage = parentWeapon.damage;
