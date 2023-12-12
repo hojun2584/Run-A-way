@@ -15,23 +15,6 @@ public enum CustomObjectLayer
 namespace Hojun
 {
 
-    public class ZombieData
-    {
-        public float hp;
-        public float speed;
-        public bool isDead;
-        public float attackPoint;
-        public string zombieName;
-
-        public ZombieData(float hp , float spped , float attack) 
-        {
-            this.hp = hp;
-            this.speed = spped;
-            this.isDead = false;
-            this.attackPoint = attack;
-        }
-
-    }
 
 
     public abstract class Zombie : Character, IMoveAble ,IDieable , IAttackAble 
@@ -83,6 +66,7 @@ namespace Hojun
             get=> zombieData.isDead; set {  zombieData.isDead = value; }
         }
 
+        [SerializeField]
         protected CharacterData zombieData;
 
 
