@@ -14,15 +14,15 @@ namespace Hojun
         Animator aniCompo;
         NavMeshAgent agent;
 
-
-        
         // 들은 소리가 runHearValue이상이면 달리게 됨
         public float runHearValue = 20f;
 
         public SearchState(IStateMachine sm) : base(sm)
         {
             ownerZombie = owner.GetComponent<Zombie>();
+            aniCompo = owner.GetComponent<Animator>();
             agent = owner.GetComponent<NavMeshAgent>();
+
             if(ownerZombie == null) 
             {
                 Debug.Log("ERROR");
@@ -32,30 +32,37 @@ namespace Hojun
 
         public override void Enter()
         {
-            //aniCompo.SetBool("Walk" , true);
+            aniCompo.SetInteger("State" , (int)Zombie.ZombieState.SEARCH );
             agent.enabled = true;
             ownerZombie.MoveStrategy = ownerZombie.GetMoveDict(Zombie.ZombieMove.SEARCH);
-            ownerZombie.Move();
-
-            Debug.Log("searchEnter");
+            
         }
 
         public override void Exit()
         {
-            //aniCompo.SetBool("Walk" , false);
-            agent.enabled = false;
+
         }
 
         public override void Update()
         {
 
-            Debug.Log("search update");
-
-            if(ownerZombie.HearValue >= runHearValue)
+            if (ownerZombie.IsFindPlayer)
             {
-                Debug.Log("running");
-                agent.speed = ownerZombie.zombieData.Speed*1.4f;
+                stateMachine.SetState( (int)Zombie.ZombieState.FIND );
             }
+
+            Debug.Log("search update");
+            ownerZombie.Move();
+
+            if (ownerZombie.HearValue >= runHearValue)
+            {
+                aniCompo.SetBool("Run" , true);
+                Debug.Log("running");
+                agent.speed = ownerZombie.Speed*1.4f;
+            }
+
+
+
 
         }
 

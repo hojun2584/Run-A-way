@@ -20,17 +20,42 @@ namespace Hojun
 
     public interface IHearAble
     {
-
         public void Hear(GameObject soundOwner);
     }
 
+    public interface IHitStrategy
+    {
+        public void Hit(float damage , IAttackAble attacker);
+    }
+
+    public interface IHitAble
+    {
+        public void Hit(float damage , IAttackAble attacker);
+
+        public CharacterData Data 
+        {
+            get;
+        }
+
+    }
+
+    public interface IAttackStrategy
+    {
+        public float Attack( IHitAble hitObj);
+        public float GetDamage();
+    }
+
+    public interface IAttackAble 
+    {
+        public void Attack();
+        public GameObject GetAttacker();
+    }
 
 
-    //public interface IHearStrategy
-    //{
-    //    public void Hear( GameObject target );
-
-    //}
+    public interface IDieable
+    {
+        public void Die();
+    }
 
 
 }

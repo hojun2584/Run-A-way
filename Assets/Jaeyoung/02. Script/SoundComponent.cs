@@ -42,7 +42,11 @@ namespace Jaeyoung
                 foreach (Collider zombie in coll)
                 {
                     if (zombie.TryGetComponent<IHearAble>(out IHearAble zom))
+                    {
                         zom.Hear(this.gameObject);
+                        Debug.Log("zombie on");
+                    }
+                        
                 }
             }
 
