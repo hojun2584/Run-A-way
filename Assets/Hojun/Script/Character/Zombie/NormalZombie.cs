@@ -117,11 +117,9 @@ namespace Hojun
             return attackStrategy.GetDamage();
         }
 
-        [PunRPC]
         public override void Hit(float damage)
         {
-            Debug.Log("hit");
-            Hp -= damage;
+            //
         }
     }
 
