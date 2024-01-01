@@ -52,6 +52,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4637368323094050466, guid: fd53785a20ca5f64cab6e01457ac431b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4637368323094050466, guid: fd53785a20ca5f64cab6e01457ac431b, type: 3}
       propertyPath: zombieData
       value: 
       objectReference: {fileID: 11400000, guid: 4aa78e9366bf63d45a93c98737d0ea74, type: 2}
@@ -76,6 +80,10 @@ PrefabInstance:
       value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 4637368323094050489, guid: fd53785a20ca5f64cab6e01457ac431b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4637368323094050489, guid: fd53785a20ca5f64cab6e01457ac431b, type: 3}
       propertyPath: target.m_Bits
       value: 67108864
       objectReference: {fileID: 0}
@@ -95,7 +103,8 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4637368323094050466, guid: fd53785a20ca5f64cab6e01457ac431b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: fd53785a20ca5f64cab6e01457ac431b, type: 3}
 --- !u!1 &712908326850109623 stripped
 GameObject:
@@ -154,6 +163,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolingType: 2
+--- !u!114 &2213405264173287771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712908326850109623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27aeae52a4c8c4245b9471888e81d8b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterName: 
+  zombieData: {fileID: 11400000, guid: 4aa78e9366bf63d45a93c98737d0ea74, type: 2}
+  runHearValue: 0
+  target: {fileID: 0}
+  targetArea: {x: 0, y: 0, z: 0}
+  hearComponent: {fileID: 0}
+  deathTime: 3
 --- !u!1 &713054279004287933 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4638147362546668916, guid: fd53785a20ca5f64cab6e01457ac431b, type: 3}
